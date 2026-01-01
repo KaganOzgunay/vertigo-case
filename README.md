@@ -1,4 +1,10 @@
-# Clans Management API
+# Vertigo Games - Case Study
+
+This repository contains solutions for both parts of the Vertigo Games case study.
+
+---
+
+## Part 1: Clans Management API
 
 A REST API for managing game clans, built with FastAPI and MySQL.
 
@@ -256,25 +262,107 @@ The import script handles the following data quality issues:
 - Empty `name` values → Skips the row
 - Invalid data → Logs and continues with valid records
 
-## Screenshots
+### API Screenshots
 
-### All API Endpoints
+#### All API Endpoints
 ![All Endpoints](screenshots/all_end_points.png)
 
-### Health Check
+#### Health Check
 ![Health Check](screenshots/health_check.png)
 
-### List All Clans
+#### List All Clans
 ![List Clans](screenshots/list_clans.png)
 
-### Search Clans
+#### Search Clans
 ![Search Clans](screenshots/search_clans.png)
 
-### Create Clan
+#### Create Clan
 ![Create Clan](screenshots/create_clan.png)
 
-### Delete Clan
+#### Delete Clan
 ![Delete Clan](screenshots/delete_clan.png)
+
+---
+
+## Part 2: Data Analytics & Visualization
+
+### Overview
+
+Processed ~7.3 million rows of user daily metrics data using DBT and BigQuery, then built an interactive dashboard in Looker Studio.
+
+### Technology Stack
+
+- **Data Warehouse**: Google BigQuery
+- **Transformation**: DBT (Data Build Tool)
+- **Visualization**: Looker Studio
+
+### Data Pipeline
+
+```
+Raw CSV Data (17 files, ~7.3M rows)
+         │
+         ▼
+    BigQuery (raw)
+         │
+         ▼ DBT (cleaning & aggregation)
+         │
+    BigQuery (daily_metrics table, ~11.4k rows)
+         │
+         ▼
+    Looker Studio Dashboard
+```
+
+### Data Cleaning
+
+The DBT models handle the following data quality issues:
+- NULL/empty platform values → Converted to 'UNKNOWN'
+- Empty country values → Converted to 'Unknown'
+- NULL numeric values (revenue, counts) → Converted to 0
+- Standardized platform names to uppercase (ANDROID/IOS)
+
+### Output Metrics
+
+The `daily_metrics` model aggregates data by date, country, and platform:
+
+| Metric | Description |
+|--------|-------------|
+| DAU | Daily Active Users |
+| Total IAP Revenue | Sum of in-app purchase revenue |
+| Total Ad Revenue | Sum of advertisement revenue |
+| ARPDAU | Average Revenue Per Daily Active User |
+| Matches Started | Total matches started |
+| Win Ratio | Victories / Total matches ended |
+| Server Error per DAU | Connection errors per user |
+
+### Key Findings
+
+| Metric | Value |
+|--------|-------|
+| Total User-Days | 7.29M |
+| Unique Users | 2.45M |
+| Date Range | Feb 15 - Mar 15, 2024 (30 days) |
+| Countries | 233 |
+
+| Platform | User-Days | Total Revenue | Avg ARPDAU |
+|----------|-----------|---------------|------------|
+| Android | 4.77M | $470,654 | $0.117 |
+| iOS | 2.53M | $609,297 | $0.180 |
+
+### Dashboard Screenshots
+
+#### Dashboard Overview
+![Dashboard Overview](screenshots/dashboard_overview.png)
+
+#### DAU Trend
+![DAU Trend](screenshots/dau_trend.png)
+
+#### Revenue Over Time
+![Revenue Over Time](screenshots/revenue_over_time.png)
+
+#### Platform Comparison
+![Platform Comparison](screenshots/platform_comparison.png)
+
+---
 
 ## License
 
