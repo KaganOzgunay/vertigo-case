@@ -53,7 +53,7 @@ The easiest way to run this project locally is with Docker Compose. No cloud acc
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/vertigo-case.git
+git clone https://github.com/kaganozgunay/vertigo-case.git
 cd vertigo-case
 
 # Start API and MySQL database
